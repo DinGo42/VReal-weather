@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             className={cn(styleType, "h-full w-full", className)}
             {...props}
             value={value || inputValue}
-            onChange={e => {
+            onChange={(e) => {
               setInputValue(e.target.value);
               onChange?.(e);
             }}

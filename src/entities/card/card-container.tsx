@@ -7,4 +7,4 @@ type WeatherCardContainerProps = {
 };
 
 export const WeatherCardContainer: FC<WeatherCardContainerProps> = ({ data }) =>
-  data?.map(props => <Card key={props.id} {...props} />);
+  data?.map((props) => <Card key={props.id} {...props} />);

@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(weatherApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(weatherApi.middleware),
   });
   return store;
 };

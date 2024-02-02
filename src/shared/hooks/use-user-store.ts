@@ -12,15 +12,15 @@ export const useUserStore = () => {
 
   const addForecastLocation = useCallback(
     (value: ReturnType<typeof userAddForecastLocation>["payload"]) => dispatch(userAddForecastLocation(value)),
-    [],
+    [dispatch],
   );
   const changeLanguage = useCallback(
     (value: ReturnType<typeof userChangeLanguage>["payload"]) => dispatch(userChangeLanguage(value)),
-    [],
+    [dispatch],
   );
   const removeForecastLocation = useCallback(
     (value: ReturnType<typeof userRemoveForecastLocation>["payload"]) => dispatch(userRemoveForecastLocation(value)),
-    [],
+    [dispatch],
   );
 
   return {

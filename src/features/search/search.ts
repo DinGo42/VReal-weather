@@ -23,7 +23,7 @@ export const useSearch = (settings?: HookArgs) => {
   useEffect(() => {
     if (!ready) return;
     Promise.all(
-      data.map(async place => {
+      data.map(async (place) => {
         const addressInfo = await getInfoByAddress({ address: place.description });
         const {
           city,
@@ -34,8 +34,8 @@ export const useSearch = (settings?: HookArgs) => {
           description: city ? `${city}, ${shortName}` : longName,
         };
       }),
-    ).then(res => setData(res));
-  }, [data]);
+    ).then((res) => setData(res));
+  }, [data, ready]);
 
   const handleChange = useCallback(
     (value: string) => {

@@ -13,7 +13,7 @@ import { ClearSuggestions, SetValue, Status } from "use-places-autocomplete";
 import { SearchingResults } from "./searching-results";
 import { v4 as uuidv4 } from "uuid";
 
-export type resultItemProps = {
+export type ResultItemProps = {
   clearSuggestions: ClearSuggestions;
   data: google.maps.places.AutocompletePrediction[];
   setLocation: SetValue;
