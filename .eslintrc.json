@@ -1,0 +1,67 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "ignorePatterns": ["**/*.json", "tailwind.config.ts"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "overrides": [
+    {
+      "env": {
+        "node": true
+      },
+      "files": [".eslintrc.json"],
+      "parserOptions": {
+        "sourceType": "script"
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [".json"]
+  },
+  "plugins": ["@typescript-eslint", "prettier", "naming-convention", "unicorn"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["objectLiteralProperty"],
+        "format": ["camelCase"]
+      },
+      {
+        "selector": ["enum", "typeLike", "interface"],
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": ["enumMember"],
+        "format": ["UPPER_CASE"]
+      },
+      {
+        "selector": "variableLike",
+        "format": ["PascalCase", "camelCase"]
+      }
+    ],
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase",
+        "ignore": ["App.tsx"]
+      }
+    ],
+    "new-cap": ["error", { "newIsCap": true, "capIsNew": false }]
+  }
+}
