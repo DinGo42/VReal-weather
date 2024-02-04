@@ -1,4 +1,4 @@
-import { StatusCodes } from "./status-codes";
+import { StatusCodes } from "../../status-codes";
 
 export type WeatherError = {
   cod: Exclude<StatusCodes, StatusCodes.SUCCESS>;

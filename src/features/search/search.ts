@@ -1,6 +1,8 @@
-import { getInfoByAddress } from "@weather/shared";
+import { Translations, getInfoByAddress, languageStorage } from "@weather/shared";
 import { useState, useCallback, useEffect } from "react";
 import useReactPlaces, { HookArgs } from "use-places-autocomplete";
+
+const currentLanguage = languageStorage.get() || Translations.ENG;
 
 export const useSearch = (settings?: HookArgs) => {
   const [newData, setData] = useState<google.maps.places.AutocompletePrediction[]>([]);
@@ -13,7 +15,7 @@ export const useSearch = (settings?: HookArgs) => {
   } = useReactPlaces({
     requestOptions: {
       types: ["geocode"],
-      language: "en",
+      language: currentLanguage,
     },
     cache: false,
     debounce: 500,

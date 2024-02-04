@@ -1,8 +1,8 @@
-import { ReactNode, DetailedHTMLProps, ButtonHTMLAttributes, forwardRef } from "react";
-import { cn } from "../utils";
+import { ReactNode, DetailedHTMLProps, ButtonHTMLAttributes, FC, memo } from "react";
+import { twJoin } from "tailwind-merge";
 
 export enum ButtonStyleTypes {
-  MAIN = "text-main-white bg-main-blue rounded-md px-8 py-2 shadow-[0px_3px_10px_-5px_rgb(0,0,0)]",
+  MAIN = "text-main-white bg-main-blue rounded-md px-8 py-2 shadow-main",
   NONE = "",
 }
 
@@ -12,10 +12,8 @@ export type ButtonProps = {
   className?: string;
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, styleType, className, ...props }, ref) => (
-    <button className={cn(className, styleType)} ref={ref} {...props}>
-      {children}
-    </button>
-  ),
-);
+export const Button: FC<ButtonProps> = memo(({ children, styleType, className, ...props }) => (
+  <button className={twJoin(className, styleType)} {...props}>
+    {children}
+  </button>
+));

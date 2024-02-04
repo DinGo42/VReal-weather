@@ -1,3 +1,13 @@
 {
-  "1": "asd"
+  "header": {
+    "addButton": "Додати"
+  },
+  "loading": "Завантаження...",
+  "weatherCard": {
+    "wind": "Вітер",
+    "humidity": "Вологість",
+    "pressure": "Тиск",
+    "feelsLike": "Відчувається як"
+  },
+  "errorMessage": "На жаль, сталася помилка"
 }

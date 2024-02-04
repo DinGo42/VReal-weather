@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { StatusCodes, WeatherResponse, WeatherError } from "../types";
+import { Translations, WeatherResponse, WeatherError, StatusCodes } from "../types";
+import { languageStorage } from "../utils";
 
+const currentLanguage = languageStorage.get() || Translations.ENG;
 interface WeatherApiParams {
   lat: number;
   lng: number;
@@ -22,7 +24,8 @@ export const weatherApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.openweathermap.org/" }),
   endpoints: (builder) => ({
     getForecast: builder.query<WeatherResponse, WeatherApiParams>({
-      query: ({ lat, lng }) => `data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${"1a45ff9e85cd13ad1ad576307fe7a916"}`,
+      query: ({ lat, lng }) =>
+        `data/2.5/forecast?lat=${lat}&lon=${lng}&lang=${currentLanguage}&appid=${"1a45ff9e85cd13ad1ad576307fe7a916"}`,
       transformResponse: validateWeatherResponse,
     }),
   }),

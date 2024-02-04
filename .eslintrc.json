@@ -32,6 +32,7 @@
   },
   "plugins": ["@typescript-eslint", "prettier", "naming-convention", "unicorn"],
   "rules": {
+    "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
     "quotes": ["error", "double"],

@@ -1,4 +1,3 @@
-export * from "./concat-styles";
 export * from "./date-validator";
 export * from "./local-storage-utils-generator";
 export * from "./get-address-info";

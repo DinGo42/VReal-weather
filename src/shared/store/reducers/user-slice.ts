@@ -1,4 +1,4 @@
-import { TemperatureMetrics, Translates, languageStorage, selectedForecastStorage } from "@weather/shared";
+import { TemperatureMetrics, selectedForecastStorage } from "@weather/shared";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type SelectedLocation = {
@@ -10,19 +10,14 @@ export type SelectedLocation = {
 
 export type UserState = {
   weatherForecasts: SelectedLocation[];
-  language: Translates;
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    language: languageStorage.get() || Translates.ENG,
     weatherForecasts: selectedForecastStorage.get() || [],
   },
   reducers: {
-    changeLanguage(state, action: PayloadAction<Translates>) {
-      state.language = action.payload;
-    },
     addForecastLocation(state, action: PayloadAction<SelectedLocation>) {
       state.weatherForecasts.push(action.payload);
     },
@@ -31,6 +26,6 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { addForecastLocation, changeLanguage, removeForecastLocation } = userSlice.actions;
+export const { addForecastLocation, removeForecastLocation } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

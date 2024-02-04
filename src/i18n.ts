@@ -4,22 +4,30 @@ import { initReactI18next } from "react-i18next";
 import translationEng from "./shared/translations/english/translation.json";
 import translationUa from "./shared/translations/ukrainian/translation.json";
 import translationHe from "./shared/translations/hebrew/translation.json";
+import { Translations, languageStorage } from "./shared";
 
-const resources = {
+export const resources = {
   en: {
-    translation: translationEng,
+    main: translationEng,
   },
   ua: {
-    translation: translationUa,
+    main: translationUa,
   },
   he: {
-    translation: translationHe,
+    main: translationHe,
   },
 };
 
 i18next.use(initReactI18next).init({
+  ns: ["main"],
+  defaultNS: "main",
+  fallbackLng: Translations.ENG,
   resources,
-  lng: "en",
+  lng: languageStorage.get() || Translations.ENG,
+  fallbackNS: "main",
+  interpolation: {
+    escapeValue: false,
+  },
 });
 
 export default i18next;

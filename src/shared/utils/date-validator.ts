@@ -1,80 +1,72 @@
-type DateInfo = {
-  fullName: string;
-  shortName: string;
+/* eslint-disable @typescript-eslint/naming-convention */
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import("dayjs/locale/he");
+import("dayjs/locale/ru");
+import { Translations } from "../types";
+
+const ukrainianLocale: ILocale = {
+  name: "ua",
+  weekdays: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
+  weekdaysShort: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+  weekdaysMin: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+  months: [
+    "Січеня",
+    "Лютого",
+    "Березень",
+    "Квітня",
+    "Травня",
+    "Червня",
+    "Липня",
+    "Серпня",
+    "Вересня",
+    "Жовтня",
+    "Листопада",
+    "Грудня",
+  ],
+  monthsShort: ["Січ", "Лют", "Бер", "Квіт", "Трав", "Черв", "Лип", "Серп", "Вер", "Жовт", "Лист", "Rpy"],
+  weekStart: 1,
+  ordinal: (n: unknown) => `${n}.`,
+  formats: {
+    LT: "HH:mm",
+    LTS: "HH:mm:ss",
+    L: "DD.MM.YYYY",
+    LL: "D MMMM YYYY р.",
+    LLL: "D MMMM YYYY р., HH:mm",
+    LLLL: "dddd, D MMMM YYYY р., HH:mm",
+  },
+  relativeTime: {
+    future: "через %s",
+    past: "%s тому",
+    s: "кілька секунд",
+    m: "хвилина",
+    mm: "хвилин",
+    h: "година",
+    hh: "годин",
+    d: "день",
+    dd: "днів",
+    M: "місяць",
+    MM: "місяців",
+    y: "рік",
+    yy: "років",
+  },
 };
 
-export const Months: DateInfo[] = [
-  { fullName: "January", shortName: "Jan" },
-  { fullName: "February", shortName: "Feb" },
-  { fullName: "March", shortName: "Mar" },
-  { fullName: "April", shortName: "Apr" },
-  { fullName: "May", shortName: "May" },
-  { fullName: "June", shortName: "Jun" },
-  { fullName: "July", shortName: "Jul" },
-  { fullName: "August", shortName: "Aug" },
-  { fullName: "September", shortName: "Sep" },
-  { fullName: "October", shortName: "Oct" },
-  { fullName: "November", shortName: "Nov" },
-  { fullName: "December", shortName: "Dec" },
-] as const;
+dayjs.locale(ukrainianLocale);
+dayjs.extend(localizedFormat);
 
-export const daysOfWeek: DateInfo[] = [
-  { fullName: "Monday", shortName: "Mon" },
-  { fullName: "Tuesday", shortName: "Tue" },
-  { fullName: "Wednesday", shortName: "Wed" },
-  { fullName: "Thursday", shortName: "Thu" },
-  { fullName: "Friday", shortName: "Fri" },
-  { fullName: "Saturday", shortName: "Sat" },
-  { fullName: "Sunday", shortName: "Sun" },
-] as const;
+type FormattedDate = {
+  date?: Date;
+  locale: Translations;
+};
 
-export const formatDate = (publication?: Date | number) => {
-  if (!publication) return null;
-  const date = new Date(publication);
-  const currentDayOfWeek = date.getDay();
-  const currentDay = date.getDate();
-  const currentMonth = date.getMonth() + 1;
-  const year = date.getFullYear();
-
-  const formattedDay = currentDay < 9 ? "0" + currentDay : currentDay;
-  const month = Months[currentMonth];
-
-  const lastDigit = currentDay % 10;
-  const lastTwoDigits = currentDay % 100;
-
-  const dayAndMonth = `${formattedDay}.${currentMonth < 9 ? "0" + currentMonth : currentMonth}`;
-  const currentHours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-  const currentMin = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-
-  let daySuffix: "th" | "st" | "nd" | "rd";
-
-  switch (true) {
-    case lastTwoDigits >= 11 && lastTwoDigits <= 13:
-      daySuffix = "th";
-      break;
-    case lastDigit === 1:
-      daySuffix = "st";
-      break;
-    case lastDigit === 2:
-      daySuffix = "nd";
-      break;
-    case lastDigit === 3:
-      daySuffix = "rd";
-      break;
-    default:
-      daySuffix = "th";
-      break;
-  }
-
+export const getFormattedDate = ({ date, locale }: FormattedDate) => {
+  const currentDate = dayjs(date);
+  const formattedMonthYear = currentDate.format(locale === Translations.ENG ? "MM.DD" : "DD:MM");
+  const formattedDate = currentDate.format("ddd, D MMMM, HH:mm");
+  dayjs.locale(locale);
   return {
-    formattedDay,
-    time: `${currentHours}:${currentMin}`,
-    month,
-    year,
-    dayOfWeek: daysOfWeek[currentDayOfWeek - 1],
-    daySuffix,
-    dayAndMonth,
-    dayAsNumber: currentDay,
-    monthNumber: currentMonth,
+    fullFormatted: formattedDate,
+    formattedMonthYear: formattedMonthYear,
   };
 };

@@ -1,3 +1,13 @@
 {
-  "1": "asd"
+  "header": {
+    "addButton": "לְהוֹסִיף"
+  },
+  "loading": "הַעֲמָסָה...",
+  "weatherCard": {
+    "wind": "רוּחַ",
+    "humidity": "לחות",
+    "pressure": "לַחַץ",
+    "feelsLike": "מרגיש כמו"
+  },
+  "errorMessage": "אופס, אירעה שגיאה."
 }

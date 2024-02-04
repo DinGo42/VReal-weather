@@ -1,3 +1,13 @@
 {
-  "1": "asd"
+  "header": {
+    "addButton": "Add"
+  },
+  "loading": "Loading...",
+  "weatherCard": {
+    "wind": "Wind",
+    "humidity": "Humidity",
+    "pressure": "Pressure",
+    "feelsLike": "Feels like"
+  },
+  "errorMessage": "Oops, an error occurred."
 }

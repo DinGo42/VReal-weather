@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { userReducer } from "./reducers";
+import { errorReducer, userReducer } from "./reducers";
 import { weatherApi } from "../services";
 
 const rootReducer = combineReducers({
   userReducer,
+  errorReducer,
   [weatherApi.reducerPath]: weatherApi.reducer,
 });
 

@@ -29,10 +29,8 @@ export enum FontSizes {
 module.exports = {
   content: ["./src/**/*.{html,js,ts,tsx}"],
   theme: {
-    extends: {
-      boxShadow: {
-        "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
-      },
+    boxShadow: {
+      main: "0px 3px 10px -5px rgb(0,0,0)",
     },
     colors: {
       [Colors.MAIN_WHITE]: "#ffffff",
@@ -122,6 +120,25 @@ module.exports = {
           lineHeight: "8px",
         },
       ],
+    },
+    keyframes: {
+      hide: {
+        from: { opacity: "1" },
+        to: { opacity: "0" },
+      },
+      slideIn: {
+        from: { transform: "translateX(calc(100% + var(--viewport-padding)))" },
+        to: { transform: "translateX(0)" },
+      },
+      swipeOut: {
+        from: { transform: "translateX(var(--radix-toast-swipe-end-x))" },
+        to: { transform: "translateX(calc(100% + var(--viewport-padding)))" },
+      },
+    },
+    animation: {
+      hide: "hide 100ms ease-in",
+      slideIn: "slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+      swipeOut: "swipeOut 100ms ease-out",
     },
   },
   plugins: [],

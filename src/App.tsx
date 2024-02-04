@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import { Search, WeatherCardContainer } from "./entities";
+import { ChangeTranslation, Search, Toast, WeatherCardContainer } from "./entities";
 import { useSearch } from "./features";
 import { TemperatureMetrics, getInfoByAddress, useUserStore } from "./shared";
 import { v4 as uuidv4 } from "uuid";
+
 function App() {
   const [hasLocation, setLocation] = useState(false);
   const searchLogic = useSearch();
@@ -29,10 +30,15 @@ function App() {
   }
   return (
     <>
-      <Search {...searchLogic} />
+      <header className="flex h-fit w-full flex-col items-center gap-5 pt-10">
+        <ChangeTranslation className="self-end pr-5" />
+        <Search {...searchLogic} />
+      </header>
+
       <div className="grid h-full w-full gap-8 p-10 lg:grid-cols-3 xl:grid-cols-5">
         <WeatherCardContainer data={weatherForecasts} />
       </div>
+      <Toast />
     </>
   );
 }
