@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import("dayjs/locale/he");
 import("dayjs/locale/ru");
 import { Translations } from "../types";
@@ -54,6 +55,7 @@ const ukrainianLocale: ILocale = {
 
 dayjs.locale(ukrainianLocale);
 dayjs.extend(localizedFormat);
+dayjs.extend(customParseFormat);
 
 type FormattedDate = {
   date?: Date;
@@ -63,7 +65,8 @@ type FormattedDate = {
 export const getFormattedDate = ({ date, locale }: FormattedDate) => {
   const currentDate = dayjs(date);
   const formattedMonthYear = currentDate.format(locale === Translations.ENG ? "MM.DD" : "DD:MM");
-  const formattedDate = currentDate.format("ddd, D MMMM, HH:mm");
+  const formattedDate = currentDate.format(locale === Translations.ENG ? "ddd, D MMMM, h:mm A" : "ddd, D MMMM, HH:mm");
+
   dayjs.locale(locale);
   return {
     fullFormatted: formattedDate,

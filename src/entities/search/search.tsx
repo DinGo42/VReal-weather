@@ -54,7 +54,7 @@ export const Search: FC<SearchProps> = memo(
           inputWrapperClassName="flex flex-col-reverse w-full"
         >
           {status === "OK" && (
-            <div className="shadow-main absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md bg-main-white">
+            <div className="absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md bg-main-white shadow-main">
               {isLoading ? (
                 <span> {t("loading")}</span>
               ) : (

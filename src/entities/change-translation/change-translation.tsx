@@ -31,7 +31,7 @@ export const ChangeTranslation: FC<ChangeTranslationProps> = memo(({ className }
       </Button>
       <div
         className={twJoin(
-          "shadow-main absolute z-50 mt-8 grid w-full bg-main-white transition-all duration-500",
+          "absolute z-50 mt-8 grid w-full bg-main-white shadow-main transition-all duration-500",
           isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
       >
