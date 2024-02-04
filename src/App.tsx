@@ -4,8 +4,10 @@ import { ChangeTranslation, Search, Toast, WeatherCardContainer } from "./entiti
 import { useSearch } from "./features";
 import { TemperatureMetrics, getInfoByAddress, useUserStore } from "./shared";
 import { v4 as uuidv4 } from "uuid";
+import { useLazyLoading } from "./shared/utils/lazy-loading";
 
-function App() {
+const App = () => {
+  useLazyLoading();
   const [hasLocation, setLocation] = useState(false);
   const searchLogic = useSearch();
   const { weatherForecasts, addForecastLocation } = useUserStore();
@@ -35,12 +37,12 @@ function App() {
         <Search {...searchLogic} />
       </header>
 
-      <div className="grid h-full w-full gap-8 p-10 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="grid h-fit w-full grid-rows-1 items-start gap-8 p-10 lg:grid-cols-3 xl:grid-cols-5">
         <WeatherCardContainer data={weatherForecasts} />
       </div>
       <Toast />
     </>
   );
-}
+};
 
 export default App;

@@ -10,7 +10,7 @@ import {
   StatusCodes,
   useErrorStore,
 } from "@weather/shared";
-import { FC, useCallback, useState } from "react";
+import { FC, memo, useCallback, useState } from "react";
 import { Chart } from "../chart";
 import { CloseIcon } from "@weather/icons";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ import { CardSkeleton } from "./card-skeleton";
 
 export type CardProps = SelectedLocation;
 
-export const Card: FC<CardProps> = ({ address, coords, id, selectedMetrics }) => {
+export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics }) => {
   const [measurementScale, setMeasurementScale] = useState(selectedMetrics);
   const { createError } = useErrorStore();
   const { t, i18n } = useTranslation();
@@ -90,7 +90,7 @@ export const Card: FC<CardProps> = ({ address, coords, id, selectedMetrics }) =>
   ) : (
     <div
       className={twJoin(
-        "flex flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main",
+        "shadow-main flex h-fit flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4",
         isTemperatureBelowZero ? "bg-secondary-blue" : "bg-main-creamy",
       )}
     >
@@ -176,4 +176,4 @@ export const Card: FC<CardProps> = ({ address, coords, id, selectedMetrics }) =>
       </div>
     </div>
   );
-};
+});

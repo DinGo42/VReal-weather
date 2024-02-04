@@ -1,5 +1,14 @@
-import { TemperatureMetrics, selectedForecastStorage } from "@weather/shared";
+import { TemperatureMetrics, pagination, selectedForecastStorage } from "@weather/shared";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const forecastStore = selectedForecastStorage.get() || [];
+
+const { maxElementsPerPage, maxPaginationPages } = pagination({
+  arrayFormPagination: forecastStore,
+  itemHeight: 450,
+  maxItemsInRow: 5,
+  screensToConsider: 2,
+});
 
 export type SelectedLocation = {
   id: string;
@@ -9,15 +18,34 @@ export type SelectedLocation = {
 };
 
 export type UserState = {
+  currentPaginationPage: number;
   weatherForecasts: SelectedLocation[];
+};
+
+const initialState = {
+  currentPaginationPage: 0,
+  get weatherForecasts() {
+    return forecastStore?.slice(
+      this.currentPaginationPage * maxElementsPerPage,
+      (this.currentPaginationPage + 1) * maxElementsPerPage,
+    );
+  },
 };
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    weatherForecasts: selectedForecastStorage.get() || [],
-  },
+  initialState,
   reducers: {
+    nextPaginationPage(state) {
+      if (state.currentPaginationPage === maxPaginationPages) return;
+      state.currentPaginationPage = state.currentPaginationPage + 1;
+      const nextPageStartIndex = state.currentPaginationPage * maxElementsPerPage;
+      const nextPageEndIndex = (state.currentPaginationPage + 1) * maxElementsPerPage;
+      state.weatherForecasts = [
+        ...state.weatherForecasts,
+        ...forecastStore.slice(nextPageStartIndex, nextPageEndIndex),
+      ];
+    },
     addForecastLocation(state, action: PayloadAction<SelectedLocation>) {
       state.weatherForecasts.push(action.payload);
     },
@@ -26,6 +54,6 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { addForecastLocation, removeForecastLocation } = userSlice.actions;
+export const { addForecastLocation, removeForecastLocation, nextPaginationPage } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
