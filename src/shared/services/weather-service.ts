@@ -15,7 +15,9 @@ const validateWeatherResponse = (data: WeatherResponse | WeatherError) => {
 
   return {
     ...data,
-    list: data.list.filter((uknown, index) => (index + 1) % 8 === 0),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    ///@ts-expect-error
+    list: data.list.filter((unknown, index) => (index + 1) % 8 === 0),
     isTemperatureBelowZero: data.list[0].main.temp < 273.15,
   };
 };
