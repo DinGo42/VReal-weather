@@ -41,9 +41,9 @@
       "error",
       {
         "selector": ["objectLiteralProperty"],
-        "ignorePatterns": ["_"],
         "format": ["camelCase"]
       },
+
       {
         "selector": ["enum", "typeLike", "interface"],
         "format": ["PascalCase"]
@@ -54,7 +54,8 @@
       },
       {
         "selector": "variableLike",
-        "format": ["PascalCase", "camelCase"]
+        "format": ["PascalCase", "camelCase"],
+        "leadingUnderscore": "allow"
       }
     ],
     "unicorn/filename-case": [
