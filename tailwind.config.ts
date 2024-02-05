@@ -2,15 +2,15 @@ import { type Config } from "tailwindcss";
 /** @type {import('tailwindcss').Config} */
 
 export enum Colors {
-  MAIN_BLACK = "main-black",
-  MAIN_WHITE = "main-white",
-  MAIN_GRAY = "main-gray",
-  SECONDARY_GRAY = "secondary-gray",
-  TERTIARY_GRAY = "tertiary-gray",
-  MAIN_BLUE = "main-blue",
-  SECONDARY_BLUE = "secondary-blue",
-  MAIN_CREAMY = "main-creamy",
-  MAIN_ORANGE = "main-orange",
+  WHITE_1000 = "white-1000",
+  WHITE_850 = "white-850",
+  BLACK_1000 = "black-1000",
+  BLACK_900 = "black-900",
+  BLACK_800 = "black-800",
+  BLACK_700 = "black-700",
+  BLACK_600 = "black-600",
+  BLUE_1000 = "blue-1000",
+  ORANGE_1000 = "orange-1000",
 }
 
 export enum FontSizes {
@@ -34,15 +34,15 @@ module.exports = {
       main: "0px 3px 10px -5px rgb(0,0,0)",
     },
     colors: {
-      [Colors.MAIN_WHITE]: "#ffffff",
-      [Colors.MAIN_BLACK]: "#000000",
-      [Colors.MAIN_GRAY]: "#8d8d8d",
-      [Colors.SECONDARY_GRAY]: "#c5c5c5",
-      [Colors.TERTIARY_GRAY]: "#f2f2f2",
-      [Colors.MAIN_BLUE]: "#459de9",
-      [Colors.SECONDARY_BLUE]: "#f1f2ff",
-      [Colors.MAIN_CREAMY]: "#fffaf1",
-      [Colors.MAIN_ORANGE]: "#FFA25B",
+      [Colors.WHITE_1000]: "#ffffff",
+      [Colors.WHITE_850]: "#fffaf1",
+      [Colors.BLACK_1000]: "#000000",
+      [Colors.BLACK_900]: "#8d8d8d",
+      [Colors.BLACK_800]: "#c5c5c5",
+      [Colors.BLACK_700]: "#f2f2f2",
+      [Colors.BLACK_600]: "#f1f2ff",
+      [Colors.BLUE_1000]: "#459de9",
+      [Colors.ORANGE_1000]: "#FFA25B",
     },
     fontSize: {
       [FontSizes.H1]: [

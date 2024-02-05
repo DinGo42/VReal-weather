@@ -2,7 +2,7 @@ import { forwardRef, useState, ReactNode, DetailedHTMLProps, InputHTMLAttributes
 import { twJoin } from "tailwind-merge";
 
 export enum InputStyleTypes {
-  MAIN = "text-main-black rounded-md p-2 text-opacity-60 shadow-main outline-none",
+  MAIN = "text-black-1000 rounded-md p-2 text-opacity-60 shadow-main outline-none",
   NONE = "",
 }
 

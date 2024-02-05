@@ -33,7 +33,7 @@ export const LanguagePicker: FC<LanguagePickerProps> = memo(({ className }) => {
       </Button>
       <div
         className={twJoin(
-          "absolute z-50 mt-8 grid w-full bg-main-white shadow-main transition-all duration-500",
+          "bg-white-1000 absolute z-50 mt-8 grid w-full shadow-main transition-all duration-500",
           isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
       >
@@ -45,7 +45,7 @@ export const LanguagePicker: FC<LanguagePickerProps> = memo(({ className }) => {
                   <Button
                     key={translate}
                     onClick={() => handleSelect(translate)}
-                    className={"w-full p-1 px-[5px] py-[3px] text-start text-main-black hover:bg-tertiary-gray"}
+                    className={"text-black-1000 hover:bg-black-700 w-full p-1 px-[5px] py-[3px] text-start"}
                   >
                     {translate.toUpperCase()}
                   </Button>

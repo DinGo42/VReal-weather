@@ -10,7 +10,7 @@ import {
   useError,
   useGetForecast,
 } from "@weather/shared";
-import { FC, memo, useCallback, useMemo, useState } from "react";
+import { FC, memo, useCallback, useState } from "react";
 import { Chart } from "../chart";
 import { CloseIcon } from "@weather/icons";
 import { useTranslation } from "react-i18next";
@@ -100,7 +100,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
     <div
       className={twJoin(
         "flex h-full flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main",
-        isTemperatureBelowZero ? "bg-secondary-blue" : "bg-main-creamy",
+        isTemperatureBelowZero ? "bg-black-600" : "bg-white-850",
       )}
     >
       <Button className="-mr-2 size-2 self-end" onClick={() => removeForecastLocation(id)}>
@@ -113,7 +113,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
         </div>
         <div className="flex h-fit items-center gap-2">
           <img src={`${iconSrc}/${iconCode}.png`} />
-          <span className="-mt-1 text-h6 text-secondary-gray">{weatherState}</span>
+          <span className="text-black-800 -mt-1 text-h6">{weatherState}</span>
         </div>
       </div>
       <div className="h-[100px] w-full">
@@ -135,23 +135,23 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
         <div className="flex flex-col">
           <div className="flex">
             <span className="text-h1">{!isTemperatureBelowZero ? "+" + currentTemperature : currentTemperature}</span>
-            <div className="flex h-full items-center gap-2 text-h2 text-main-gray">
+            <div className="text-black-900 flex h-full items-center gap-2 text-h2">
               <Button
                 onClick={() => handleClick(TemperatureMetrics.CELSIUS)}
-                className={(measurementScale === TemperatureMetrics.CELSIUS && "text-main-black") || ""}
+                className={(measurementScale === TemperatureMetrics.CELSIUS && "text-black-1000") || ""}
               >
                 {TemperatureMetrics.CELSIUS}
               </Button>
               <span className="h-5 w-[1.5px] bg-[#707070] text-h2 opacity-65"></span>
               <Button
                 onClick={() => handleClick(TemperatureMetrics.FAHRENHEIT)}
-                className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-main-black") || ""}
+                className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-black-1000") || ""}
               >
                 {TemperatureMetrics.FAHRENHEIT}
               </Button>
             </div>
           </div>
-          <div className="text-h6 text-secondary-gray">
+          <div className="text-black-800 text-h6">
             {t("weatherCard.feelsLike")}:{" "}
             {Number(feelsLikeCurrentTemperature) > 0 ? "+" + feelsLikeCurrentTemperature : feelsLikeCurrentTemperature}
             <span className="text-h6-semi-bold">{measurementScale}</span>
@@ -161,7 +161,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
           <div className="w-fit text-h7">
             {t("weatherCard.wind.type")}:{" "}
             <span
-              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-blue-1000" : "text-orange-1000")}
             >
               {windSpeed}
               {t("weatherCard.wind.unit")}
@@ -170,7 +170,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
           <div className="w-fit text-h7">
             {t("weatherCard.humidity.type")}:{" "}
             <span
-              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-blue-1000" : "text-orange-1000")}
             >
               {humidity}
               {t("weatherCard.humidity.unit")}
@@ -179,7 +179,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
           <div className="w-fit text-h7">
             {t("weatherCard.pressure.type")}:{" "}
             <span
-              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-blue-1000" : "text-orange-1000")}
             >
               {pressure}
               {t("weatherCard.pressure.unit")}
