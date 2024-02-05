@@ -4,8 +4,8 @@ import { initReactI18next } from "react-i18next";
 import translationEng from "./english/translation.json";
 import translationUa from "./ukrainian/translation.json";
 import translationHe from "./hebrew/translation.json";
-import { Languages } from "../translations";
 import { languageStorage } from "../utils/language-store";
+import { Languages } from "./languages";
 
 export const resources = {
   en: {
