@@ -9,7 +9,8 @@ type LocationWithLatLong = {
   address?: never;
 };
 
-type InfoByAddressProps = LocationWithAddress | LocationWithLatLong;
+type InfoByAddressProps = (LocationWithAddress | LocationWithLatLong) &
+  Omit<google.maps.GeocoderRequest, "address" | "location">;
 
 export const getInfoByAddress = async (props: InfoByAddressProps) => {
   const results = await getGeocode({ ...props });

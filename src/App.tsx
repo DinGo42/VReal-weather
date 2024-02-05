@@ -14,7 +14,9 @@ const App = () => {
   if (!hasLocation) {
     setLocation(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-      const addressInfo = await getInfoByAddress({ location: { lat: coords.latitude, lng: coords.longitude } });
+      const addressInfo = await getInfoByAddress({
+        location: { lat: coords.latitude, lng: coords.longitude },
+      });
       const {
         city,
         country: { shortName, longName },
