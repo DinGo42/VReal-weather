@@ -53,7 +53,7 @@ export const Search: FC<SearchProps> = memo(
           styleType={InputStyleTypes.MAIN}
           inputWrapperClassName="flex flex-col-reverse w-full"
         >
-          <div className="bg-white-1000 absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md shadow-main">
+          <div className="absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md bg-white-1000 shadow-main">
             {isLoading && status === "OK" ? (
               <span> {t("loading")}</span>
             ) : (

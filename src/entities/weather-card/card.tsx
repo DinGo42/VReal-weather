@@ -113,7 +113,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
         </div>
         <div className="flex h-fit items-center gap-2">
           <img src={`${iconSrc}/${iconCode}.png`} />
-          <span className="text-black-800 -mt-1 text-h6">{weatherState}</span>
+          <span className="-mt-1 text-h6 text-black-800">{weatherState}</span>
         </div>
       </div>
       <div className="h-[100px] w-full">
@@ -135,7 +135,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
         <div className="flex flex-col">
           <div className="flex">
             <span className="text-h1">{!isTemperatureBelowZero ? "+" + currentTemperature : currentTemperature}</span>
-            <div className="text-black-900 flex h-full items-center gap-2 text-h2">
+            <div className="flex h-full items-center gap-2 text-h2 text-black-900">
               <Button
                 onClick={() => handleClick(TemperatureMetrics.CELSIUS)}
                 className={(measurementScale === TemperatureMetrics.CELSIUS && "text-black-1000") || ""}
@@ -151,7 +151,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
               </Button>
             </div>
           </div>
-          <div className="text-black-800 text-h6">
+          <div className="text-h6 text-black-800">
             {t("weatherCard.feelsLike")}:{" "}
             {Number(feelsLikeCurrentTemperature) > 0 ? "+" + feelsLikeCurrentTemperature : feelsLikeCurrentTemperature}
             <span className="text-h6-semi-bold">{measurementScale}</span>

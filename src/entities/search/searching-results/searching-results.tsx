@@ -12,7 +12,7 @@ export type ResultItemProps = {
 export const SearchingResults: FC<ResultItemProps> = memo(({ clearSuggestions, data, setLocation }) =>
   data.map(({ description }) => (
     <Button
-      className="hover:bg-black-700 px-4 py-2 text-start"
+      className="px-4 py-2 text-start hover:bg-black-700"
       key={uuidv4()}
       onClick={() => {
         setLocation(description, false);

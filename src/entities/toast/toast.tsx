@@ -8,7 +8,7 @@ export const Toast: FC = memo(() => {
   return (
     <Provider swipeDirection="right">
       <Root
-        className="bg-white-1000 grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md p-[15px] shadow-main [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+        className="grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md bg-white-1000 p-[15px] shadow-main [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
         open={isError}
         onOpenChange={clearError}
       >
