@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import { ChangeTranslation, Search, Toast, WeatherCardContainer } from "./entities";
 import { useSearch } from "./features";
 import { TemperatureMetrics, getInfoByAddress, useUserStore } from "./shared";
@@ -7,8 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useLazyLoading } from "./shared/utils/lazy-loading";
 
 const App = () => {
-  useLazyLoading();
   const [hasLocation, setLocation] = useState(false);
+  useLazyLoading();
   const searchLogic = useSearch();
   const { weatherForecasts, addForecastLocation } = useUserStore();
 

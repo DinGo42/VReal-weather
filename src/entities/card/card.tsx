@@ -90,7 +90,7 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
   ) : (
     <div
       className={twJoin(
-        "shadow-main flex h-fit flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4",
+        "flex h-fit flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main",
         isTemperatureBelowZero ? "bg-secondary-blue" : "bg-main-creamy",
       )}
     >

@@ -1,5 +1,5 @@
 import { CountryCode } from "./country-code";
-import { StatusCodes } from "./error";
+import { StatusCodes } from "../status-codes";
 import { WeatherCondition } from "./weather-conditions";
 
 export type Coords = {

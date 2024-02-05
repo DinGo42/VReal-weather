@@ -51,7 +51,7 @@ const ukrainianLocale: ILocale = {
     y: "рік",
     yy: "років",
   },
-};
+} as const;
 
 dayjs.locale(ukrainianLocale);
 dayjs.extend(localizedFormat);

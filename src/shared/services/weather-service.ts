@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Translations, WeatherResponse, WeatherError, StatusCodes } from "../types";
 import { languageStorage } from "../utils";
+import { Translations, WeatherResponse, WeatherError, StatusCodes } from "../types";
 
 const currentLanguage = languageStorage.get() || Translations.ENG;
-interface WeatherApiParams {
+type WeatherApiParams = {
   lat: number;
   lng: number;
-}
+};
 
 const validateWeatherResponse = (data: WeatherResponse | WeatherError) => {
   if (data.cod !== StatusCodes.SUCCESS || !data || !data.list || data.list.length === 0) {
