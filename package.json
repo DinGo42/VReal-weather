@@ -10,7 +10,7 @@
     "lint": "eslint . --fix",
     "format": "prettier --write .",
     "predeploy": "pnpm build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-toast": "^1.1.5",
