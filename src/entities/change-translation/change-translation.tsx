@@ -1,5 +1,5 @@
 import { PlanetIcon, ArrowIcon } from "@weather/icons";
-import { Button, Languages, languageStorage } from "@weather/shared";
+import { languageStorage, Languages, Button } from "@weather/shared";
 import { FC, memo, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twJoin } from "tailwind-merge";

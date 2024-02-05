@@ -1,4 +1,4 @@
-import { Languages, getInfoByAddress, languageStorage } from "@weather/shared";
+import { languageStorage, Languages, getInfoByAddress } from "@weather/shared";
 import { useState, useCallback, useEffect } from "react";
 import useReactPlaces, { HookArgs } from "use-places-autocomplete";
 
