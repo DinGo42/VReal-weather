@@ -63,11 +63,12 @@ type FormattedDate = {
 };
 
 export const getFormattedDate = ({ date, locale }: FormattedDate) => {
+  dayjs.locale(locale);
+
   const currentDate = dayjs(date);
   const formattedMonthYear = currentDate.format(locale === Translations.ENG ? "MM.DD" : "DD:MM");
   const formattedDate = currentDate.format(locale === Translations.ENG ? "ddd, D MMMM, h:mm A" : "ddd, D MMMM, HH:mm");
 
-  dayjs.locale(locale);
   return {
     fullFormatted: formattedDate,
     formattedMonthYear: formattedMonthYear,
