@@ -24,12 +24,7 @@ export type UserState = {
 
 const initialState = {
   currentPaginationPage: 0,
-  get weatherForecasts() {
-    return forecastStore?.slice(
-      this.currentPaginationPage * maxElementsPerPage,
-      (this.currentPaginationPage + 1) * maxElementsPerPage,
-    );
-  },
+  weatherForecasts: forecastStore?.slice(0, maxElementsPerPage),
 };
 
 export const userSlice = createSlice({
