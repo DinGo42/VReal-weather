@@ -25,6 +25,6 @@
       "@weather/icons": ["./public/icons"],
     },
   },
-  "include": ["src", "vite.config.ts", "public/icons/index.ts", "postcss.config.cjs", "@types/i18next.d.ts"],
+  "include": ["src", "vite.config.ts", "public/icons/index.ts", "postcss.config.cjs", "types/i18next.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
 }

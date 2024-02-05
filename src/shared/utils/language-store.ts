@@ -1,4 +1,4 @@
-import { Translations } from "../types";
+import { Languages } from "../translations";
 import { localStorageUtilsGenerator } from "./local-storage-utils-generator";
 
-export const languageStorage = localStorageUtilsGenerator<Translations>("language");
+export const languageStorage = localStorageUtilsGenerator<Languages>("language");

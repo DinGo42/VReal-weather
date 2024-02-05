@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { languageStorage } from "../utils";
-import { Translations, WeatherResponse, WeatherError, StatusCodes } from "../types";
+import { WeatherResponse, WeatherError, StatusCodes } from "../types";
+import { Languages } from "../translations";
 
-const currentLanguage = languageStorage.get() || Translations.ENG;
+const currentLanguage = languageStorage.get() || Languages.ENG;
 type WeatherApiParams = {
   lat: number;
   lng: number;
@@ -15,9 +16,7 @@ const validateWeatherResponse = (data: WeatherResponse | WeatherError) => {
 
   return {
     ...data,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    ///@ts-expect-error
-    list: data.list.filter((unknown, index) => (index + 1) % 8 === 0),
+    list: data.list.filter((_, index) => (index + 1) % 8 === 0),
     isTemperatureBelowZero: data.list[0].main.temp < 273.15,
   };
 };
@@ -35,4 +34,4 @@ export const weatherApi = createApi({
 
 export const { endpoints } = weatherApi;
 
-export const { useGetForecastQuery: useForecast, useLazyGetForecastQuery: useLazyForecast } = weatherApi;
+export const { useGetForecastQuery: useGetForecast, useLazyGetForecastQuery: useLazyForecast } = weatherApi;

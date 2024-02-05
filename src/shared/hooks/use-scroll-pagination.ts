@@ -1,8 +1,8 @@
 import { useRef, useEffect, useCallback } from "react";
-import { useUserStore } from "../hooks";
+import { useForecast } from "./use-forecast";
 
-export const useLazyLoading = (pixelsForUpload = 200) => {
-  const { nextPaginationPage } = useUserStore();
+export const useScrollPagination = (pixelsForUpload = 200) => {
+  const { nextPaginationPage } = useForecast();
   const scrollPositionRef = useRef(pixelsForUpload);
 
   const handleScroll = useCallback(() => {

@@ -4,13 +4,13 @@ import { Props as XAxisPropsType } from "recharts/types/cartesian/XAxis";
 import { Props as LabelListPropsType } from "recharts/types/component/LabelList";
 import { DataKey, Margin, ViewBox } from "recharts/types/util/types";
 import { v4 as uuidv4 } from "uuid";
-type Data = {
+export type Data = {
   value?: number | string | Array<number | string>;
   payload?: unknown;
   parentViewBox?: ViewBox;
 };
 
-type ChartProps<T extends Data, U extends Record<string, unknown>> = {
+export type ChartProps<T extends Data, U extends Record<string, unknown>> = {
   data: U[];
   internalMarginGraphic?: Margin;
   bottomTextColor?: string;

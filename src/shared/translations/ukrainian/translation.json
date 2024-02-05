@@ -4,9 +4,18 @@
   },
   "loading": "Завантаження...",
   "weatherCard": {
-    "wind": "Вітер",
-    "humidity": "Вологість",
-    "pressure": "Тиск",
+    "wind": {
+      "type": "Вітер",
+      "unit": "м/с"
+    },
+    "humidity": {
+      "type": "Вологість",
+      "unit": "%"
+    },
+    "pressure": {
+      "type": "Тиск",
+      "unit": "Па"
+    },
     "feelsLike": "Відчувається як"
   },
   "errorMessage": "На жаль, сталася помилка"

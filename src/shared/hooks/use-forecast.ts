@@ -1,13 +1,14 @@
 import { useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
 import {
   addForecastLocation as userAddForecastLocation,
   removeForecastLocation as userRemoveForecastLocation,
   nextPaginationPage as userNextPaginationPage,
+  useAppDispatch,
+  useAppSelector,
 } from "../store";
 
-export const useUserStore = () => {
-  const { weatherForecasts, currentPaginationPage } = useAppSelector((state) => state.userReducer);
+export const useForecast = () => {
+  const { weatherForecasts, currentPaginationPage } = useAppSelector((state) => state.weatherReducer);
   const dispatch = useAppDispatch();
 
   const nextPaginationPage = useCallback(() => {

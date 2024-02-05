@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { errorReducer, userReducer } from "./reducers";
+import { errorReducer, weatherReducer } from "./reducers";
 import { weatherApi } from "../services";
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
 const rootReducer = combineReducers({
-  userReducer,
+  weatherReducer,
   errorReducer,
   [weatherApi.reducerPath]: weatherApi.reducer,
 });
@@ -15,6 +16,12 @@ export const setupStore = () => {
   });
   return store;
 };
+
+export const store = setupStore();
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;

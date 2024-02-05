@@ -41,6 +41,7 @@
       "error",
       {
         "selector": ["objectLiteralProperty"],
+        "ignorePatterns": ["_"],
         "format": ["camelCase"]
       },
       {

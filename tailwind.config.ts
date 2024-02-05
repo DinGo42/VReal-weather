@@ -10,6 +10,7 @@ export enum Colors {
   MAIN_BLUE = "main-blue",
   SECONDARY_BLUE = "secondary-blue",
   MAIN_CREAMY = "main-creamy",
+  MAIN_ORANGE = "main-orange",
 }
 
 export enum FontSizes {
@@ -41,6 +42,7 @@ module.exports = {
       [Colors.MAIN_BLUE]: "#459de9",
       [Colors.SECONDARY_BLUE]: "#f1f2ff",
       [Colors.MAIN_CREAMY]: "#fffaf1",
+      [Colors.MAIN_ORANGE]: "#FFA25B",
     },
     fontSize: {
       [FontSizes.H1]: [

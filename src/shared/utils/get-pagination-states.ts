@@ -5,7 +5,12 @@ type PaginationProps = {
   screensToConsider: number;
 };
 
-export const pagination = ({ arrayFormPagination, itemHeight, maxItemsInRow, screensToConsider }: PaginationProps) => {
+export const getPaginationStates = ({
+  arrayFormPagination,
+  itemHeight,
+  maxItemsInRow,
+  screensToConsider,
+}: PaginationProps) => {
   const arrayLength = arrayFormPagination.length;
   const screenHeight = window.innerHeight;
   const maxElementsPerPage = (Math.ceil(screenHeight * screensToConsider) / itemHeight) * maxItemsInRow;

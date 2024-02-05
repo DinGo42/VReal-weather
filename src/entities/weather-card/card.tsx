@@ -4,30 +4,39 @@ import {
   TemperatureFormulas,
   TemperatureMetrics,
   useForecast,
-  useUserStore,
   getFormattedDate,
   selectedForecastStorage,
   StatusCodes,
-  useErrorStore,
+  useError,
+  useGetForecast,
 } from "@weather/shared";
-import { FC, memo, useCallback, useState } from "react";
+import { FC, memo, useCallback, useMemo, useState } from "react";
 import { Chart } from "../chart";
 import { CloseIcon } from "@weather/icons";
 import { useTranslation } from "react-i18next";
 import { twJoin } from "tailwind-merge";
-import { CardSkeleton } from "./card-skeleton";
+import { WeatherCardSkeleton } from "./card-skeleton";
 
 export type CardProps = SelectedLocation;
 
-export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics }) => {
+const iconSrc = "http://openweathermap.org/img/w" as const;
+
+export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedMetrics }) => {
   const [measurementScale, setMeasurementScale] = useState(selectedMetrics);
-  const { createError } = useErrorStore();
+  const { createError } = useError();
   const { t, i18n } = useTranslation();
 
-  const { isError, isLoading, data, isFetching } = useForecast(coords, {
+  const { isError, isLoading, data, isFetching } = useGetForecast(coords, {
     selectFromResult: (res) => {
       if (!res.isSuccess || !res.data) return { ...res, data: undefined };
       const { list, isTemperatureBelowZero } = res.data;
+
+      const rawForecastData = list.map(({ dt, main: { temp } }) => ({ date: dt, temperature: temp })) || [];
+
+      const forecastData = rawForecastData.map(({ temperature, date }) => ({
+        temperature: Math.floor(TemperatureFormulas[measurementScale](temperature, TemperatureMetrics.KELVIN)!),
+        date: getFormattedDate({ locale: i18n.language, date: new Date(date * 1000) }).formattedMonthYear,
+      }));
       return {
         ...res,
         data: {
@@ -40,14 +49,14 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
           },
           iconCode: list[0].weather[0].icon,
           weatherState: list[0].weather[0].description[0].toLocaleUpperCase() + list[0].weather[0].description.slice(1),
-          forecastData: list.map(({ dt, main: { temp } }) => ({ date: dt, temperature: temp })) || [],
+          forecastData,
           location: address,
           isTemperatureBelowZero,
         },
       };
     },
   });
-  const { removeForecastLocation } = useUserStore();
+  const { removeForecastLocation } = useForecast();
   const { fullFormatted } = getFormattedDate({ locale: i18n.language });
 
   const handleClick = useCallback(
@@ -86,7 +95,7 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
   }
 
   return isFetching || isLoading ? (
-    <CardSkeleton />
+    <WeatherCardSkeleton />
   ) : (
     <div
       className={twJoin(
@@ -103,7 +112,7 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
           <span className="text-h3">{fullFormatted}</span>
         </div>
         <div className="flex h-fit items-center gap-2">
-          <img src={`http://openweathermap.org/img/w/${iconCode}.png`} />
+          <img src={`${iconSrc}/${iconCode}.png`} />
           <span className="-mt-1 text-h6 text-secondary-gray">{weatherState}</span>
         </div>
       </div>
@@ -116,12 +125,7 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
             toOpacity: 0,
           }}
           chartStrokeColor={isTemperatureBelowZero ? "#5B8CFF" : "#FFA25B"}
-          data={forecastData.map(({ temperature, date }) => {
-            return {
-              temperature: Math.floor(TemperatureFormulas[measurementScale](temperature, TemperatureMetrics.KELVIN)!),
-              date: getFormattedDate({ locale: i18n.language, date: new Date(date * 1000) }).formattedMonthYear,
-            };
-          })}
+          data={forecastData}
           dotsChartDataKey={"temperature"}
           xChartDataKey="date"
         />
@@ -134,14 +138,14 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
             <div className="flex h-full items-center gap-2 text-h2 text-main-gray">
               <Button
                 onClick={() => handleClick(TemperatureMetrics.CELSIUS)}
-                className={(measurementScale === TemperatureMetrics.CELSIUS && "text-main-black") || " "}
+                className={(measurementScale === TemperatureMetrics.CELSIUS && "text-main-black") || ""}
               >
                 {TemperatureMetrics.CELSIUS}
               </Button>
               <span className="h-5 w-[1.5px] bg-[#707070] text-h2 opacity-65"></span>
               <Button
                 onClick={() => handleClick(TemperatureMetrics.FAHRENHEIT)}
-                className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-main-black") || " "}
+                className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-main-black") || ""}
               >
                 {TemperatureMetrics.FAHRENHEIT}
               </Button>
@@ -155,21 +159,30 @@ export const Card: FC<CardProps> = memo(({ address, coords, id, selectedMetrics 
         </div>
         <div className="flex flex-col items-end">
           <div className="w-fit text-h7">
-            {t("weatherCard.wind")}:{" "}
-            <span className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-[#FFA25B]")}>
-              {windSpeed}m/s
+            {t("weatherCard.wind.type")}:{" "}
+            <span
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+            >
+              {windSpeed}
+              {t("weatherCard.wind.unit")}
             </span>
           </div>
           <div className="w-fit text-h7">
-            {t("weatherCard.humidity")}:{" "}
-            <span className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-[#FFA25B]")}>
-              {humidity}%
+            {t("weatherCard.humidity.type")}:{" "}
+            <span
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+            >
+              {humidity}
+              {t("weatherCard.humidity.unit")}
             </span>
           </div>
           <div className="w-fit text-h7">
-            {t("weatherCard.pressure")}:{" "}
-            <span className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-[#FFA25B]")}>
-              {pressure}Pa
+            {t("weatherCard.pressure.type")}:{" "}
+            <span
+              className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-main-blue" : "text-main-orange")}
+            >
+              {pressure}
+              {t("weatherCard.pressure.unit")}
             </span>
           </div>
         </div>

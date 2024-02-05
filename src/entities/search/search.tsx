@@ -6,7 +6,7 @@ import {
   TemperatureMetrics,
   getInfoByAddress,
   selectedForecastStorage,
-  useUserStore,
+  useForecast,
 } from "@weather/shared";
 import { FC, memo, useCallback } from "react";
 import { ClearSuggestions, SetValue, Status } from "use-places-autocomplete";
@@ -27,8 +27,8 @@ export type SearchProps = {
 export const Search: FC<SearchProps> = memo(
   ({ isLoading, onChange, value, status, clearSuggestions, data, setLocation }) => {
     const { t } = useTranslation();
+    const { addForecastLocation } = useForecast();
 
-    const { addForecastLocation } = useUserStore();
     const handleAdd = useCallback(async () => {
       if (!value.trim()) return;
       const {
@@ -39,8 +39,8 @@ export const Search: FC<SearchProps> = memo(
       const address = city ? `${city}, ${shortName}` : longName;
       addForecastLocation({ address, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
       const info = selectedForecastStorage.get() ?? [];
-      info?.push({ address, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
-      selectedForecastStorage.set(info!);
+      info.push({ address, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
+      selectedForecastStorage.set(info);
       onChange(" ");
       clearSuggestions();
     }, [addForecastLocation, clearSuggestions, onChange, value]);
@@ -53,15 +53,13 @@ export const Search: FC<SearchProps> = memo(
           styleType={InputStyleTypes.MAIN}
           inputWrapperClassName="flex flex-col-reverse w-full"
         >
-          {status === "OK" && (
-            <div className="absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md bg-main-white shadow-main">
-              {isLoading ? (
-                <span> {t("loading")}</span>
-              ) : (
-                <SearchingResults clearSuggestions={clearSuggestions} data={data} setLocation={setLocation} />
-              )}
-            </div>
-          )}
+          <div className="absolute top-full z-50 mt-5 flex h-fit w-full flex-col overflow-y-auto rounded-md bg-main-white shadow-main">
+            {isLoading && status === "OK" ? (
+              <span> {t("loading")}</span>
+            ) : (
+              <SearchingResults clearSuggestions={clearSuggestions} data={data} setLocation={setLocation} />
+            )}
+          </div>
         </Input>
         <Button onClick={handleAdd} styleType={ButtonStyleTypes.MAIN}>
           {t("header.addButton")}

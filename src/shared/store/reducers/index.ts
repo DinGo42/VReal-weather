@@ -1,2 +1,2 @@
-export * from "./user-slice";
+export * from "./weather-slice";
 export * from "./error-slice";

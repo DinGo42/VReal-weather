@@ -4,9 +4,18 @@
   },
   "loading": "הַעֲמָסָה...",
   "weatherCard": {
-    "wind": "רוּחַ",
-    "humidity": "לחות",
-    "pressure": "לַחַץ",
+    "wind": {
+      "type": "רוח",
+      "unit": "מ/ש"
+    },
+    "humidity": {
+      "type": "לחות",
+      "unit": "%"
+    },
+    "pressure": {
+      "type": "לחץ",
+      "unit": "פה"
+    },
     "feelsLike": "מרגיש כמו"
   },
   "errorMessage": "אופס, אירעה שגיאה."

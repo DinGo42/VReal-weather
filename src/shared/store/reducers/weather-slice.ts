@@ -1,9 +1,9 @@
-import { TemperatureMetrics, pagination, selectedForecastStorage } from "@weather/shared";
+import { TemperatureMetrics, getPaginationStates, selectedForecastStorage } from "@weather/shared";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const forecastStore = selectedForecastStorage.get() || [];
 
-const { maxElementsPerPage, maxPaginationPages } = pagination({
+const { maxElementsPerPage, maxPaginationPages } = getPaginationStates({
   arrayFormPagination: forecastStore,
   itemHeight: 450,
   maxItemsInRow: 5,
@@ -27,8 +27,8 @@ const initialState = {
   weatherForecasts: forecastStore?.slice(0, maxElementsPerPage),
 };
 
-export const userSlice = createSlice({
-  name: "user",
+export const weatherSlice = createSlice({
+  name: "weather",
   initialState,
   reducers: {
     nextPaginationPage(state) {
@@ -49,6 +49,6 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { addForecastLocation, removeForecastLocation, nextPaginationPage } = userSlice.actions;
+export const { addForecastLocation, removeForecastLocation, nextPaginationPage } = weatherSlice.actions;
 
-export const userReducer = userSlice.reducer;
+export const weatherReducer = weatherSlice.reducer;

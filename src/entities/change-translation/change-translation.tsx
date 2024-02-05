@@ -1,25 +1,27 @@
 import { PlanetIcon, ArrowIcon } from "@weather/icons";
-import { Button, Translations, languageStorage } from "@weather/shared";
-import { FC, memo, useState } from "react";
+import { Button, Languages, languageStorage } from "@weather/shared";
+import { FC, memo, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twJoin } from "tailwind-merge";
 
-type ChangeTranslationProps = {
+type LanguagePickerProps = {
   className?: string;
 };
 
-export const ChangeTranslation: FC<ChangeTranslationProps> = memo(({ className }) => {
+export const LanguagePicker: FC<LanguagePickerProps> = memo(({ className }) => {
   const [isOpen, setOpen] = useState(false);
-
-  const [language, setLanguage] = useState(languageStorage.get() || Translations.ENG);
+  const [language, setLanguage] = useState(languageStorage.get() || Languages.ENG);
   const { i18n } = useTranslation();
 
-  const handleSelect = (locale: Translations) => {
-    setOpen(false);
-    setLanguage(locale);
-    i18n.changeLanguage(locale);
-    languageStorage.set(locale);
-  };
+  const handleSelect = useCallback(
+    (locale: Languages) => {
+      setOpen(false);
+      setLanguage(locale);
+      i18n.changeLanguage(locale);
+      languageStorage.set(locale);
+    },
+    [i18n],
+  );
   return (
     <div className={twJoin("relative ml-40 flex w-fit flex-col items-center", className)}>
       <Button onClick={() => setOpen((prev) => !prev)}>
@@ -37,7 +39,7 @@ export const ChangeTranslation: FC<ChangeTranslationProps> = memo(({ className }
       >
         <div className="w-full overflow-hidden">
           <div className={twJoin("flex flex-col items-center")}>
-            {Object.values(Translations).map(
+            {Object.values(Languages).map(
               (translate) =>
                 language !== translate && (
                   <Button

@@ -4,9 +4,12 @@
   },
   "loading": "Loading...",
   "weatherCard": {
-    "wind": "Wind",
-    "humidity": "Humidity",
-    "pressure": "Pressure",
+    "wind": {
+      "type": "Wind",
+      "unit": "m/s"
+    },
+    "humidity": { "type": "Humidity", "unit": "%" },
+    "pressure": { "type": "Pressure", "unit": "Pa" },
     "feelsLike": "Feels like"
   },
   "errorMessage": "Oops, an error occurred."

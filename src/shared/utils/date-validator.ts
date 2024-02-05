@@ -2,9 +2,9 @@
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Languages } from "../translations";
 import("dayjs/locale/he");
 import("dayjs/locale/ru");
-import { Translations } from "../types";
 
 const ukrainianLocale: ILocale = {
   name: "ua",
@@ -59,15 +59,15 @@ dayjs.extend(customParseFormat);
 
 type FormattedDate = {
   date?: Date;
-  locale: Translations;
+  locale: Languages;
 };
 
 export const getFormattedDate = ({ date, locale }: FormattedDate) => {
   dayjs.locale(locale);
 
   const currentDate = dayjs(date);
-  const formattedMonthYear = currentDate.format(locale === Translations.ENG ? "MM.DD" : "DD:MM");
-  const formattedDate = currentDate.format(locale === Translations.ENG ? "ddd, D MMMM, h:mm A" : "ddd, D MMMM, HH:mm");
+  const formattedMonthYear = currentDate.format(locale === Languages.ENG ? "MM.DD" : "DD:MM");
+  const formattedDate = currentDate.format(locale === Languages.ENG ? "ddd, D MMMM, h:mm A" : "ddd, D MMMM, HH:mm");
 
   return {
     fullFormatted: formattedDate,
