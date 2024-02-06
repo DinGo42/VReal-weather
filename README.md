@@ -27,7 +27,7 @@ Follow these steps to set up the VReal Weather App locally on your machine.
    ```bash
    git clone https://github.com/DinGo42/VReal-weather.git
 
-   cd vreal-weather-app
+   cd VReal-weather
 
    npm install
 
