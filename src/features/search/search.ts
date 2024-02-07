@@ -30,7 +30,7 @@ export const useSearch = (settings?: HookArgs) => {
         const {
           city,
           country: { shortName, longName },
-        } = addressInfo!;
+        } = addressInfo;
         return {
           ...place,
           description: city ? `${city}, ${shortName}` : longName,

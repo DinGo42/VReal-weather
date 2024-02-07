@@ -21,7 +21,7 @@ export type CardProps = SelectedLocation;
 
 const iconSrc = "http://openweathermap.org/img/w" as const;
 
-export const WeatherCard: FC<CardProps> = memo(({ coords, id, selectedMetrics }) => {
+export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedMetrics }) => {
   const [measurementScale, setMeasurementScale] = useState(selectedMetrics);
   const { createError } = useError();
   const { t, i18n } = useTranslation();
@@ -29,7 +29,7 @@ export const WeatherCard: FC<CardProps> = memo(({ coords, id, selectedMetrics })
   const { isError, isLoading, data, isFetching } = useGetForecast(coords, {
     selectFromResult: (res) => {
       if (!res.isSuccess || !res.data) return { ...res, data: undefined };
-      const { list, isTemperatureBelowZero, location } = res.data;
+      const { list, isTemperatureBelowZero } = res.data;
 
       const rawForecastData = list.map(({ dt, main: { temp } }) => ({ date: dt, temperature: temp })) || [];
 
@@ -50,7 +50,7 @@ export const WeatherCard: FC<CardProps> = memo(({ coords, id, selectedMetrics })
           iconCode: list[0].weather[0].icon,
           weatherState: list[0].weather[0].description[0].toLocaleUpperCase() + list[0].weather[0].description.slice(1),
           forecastData,
-          location,
+          location: address,
           isTemperatureBelowZero,
         },
       };
