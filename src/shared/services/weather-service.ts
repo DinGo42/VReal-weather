@@ -27,8 +27,6 @@ const validateWeatherResponse = async (
     city,
     country: { shortName, longName },
   } = await getInfoByAddress({ placeId });
-
-  console.log(`${city}, ${shortName}`, "::", longName);
   return {
     ...data,
     location: city ? `${city}, ${shortName}` : longName,
