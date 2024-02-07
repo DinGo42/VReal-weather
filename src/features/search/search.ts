@@ -15,6 +15,7 @@ export const useSearch = (settings?: HookArgs) => {
     clearSuggestions,
   } = useReactPlaces({
     requestOptions: {
+      types: ["(regions)"],
       language: currentLanguage,
     },
     cache: false,
