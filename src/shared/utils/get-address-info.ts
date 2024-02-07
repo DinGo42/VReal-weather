@@ -1,4 +1,6 @@
 import { getGeocode, getLatLng } from "use-places-autocomplete";
+import { languageStorage } from ".";
+import { Languages } from "..";
 
 type LocationWithAddress = {
   address: string;
@@ -12,8 +14,10 @@ type LocationWithLatLong = {
 type InfoByAddressProps = (LocationWithAddress | LocationWithLatLong) &
   Omit<google.maps.GeocoderRequest, "address" | "location">;
 
+const currentLanguage = languageStorage.get() || Languages.ENG;
+
 export const getInfoByAddress = async (props: InfoByAddressProps) => {
-  const results = await getGeocode({ ...props });
+  const results = await getGeocode({ language: currentLanguage, ...props });
   const { lat, lng } = await getLatLng(results[0]);
   const city = ["locality", "political"].map((item) =>
     results[0].address_components.find((component) => {

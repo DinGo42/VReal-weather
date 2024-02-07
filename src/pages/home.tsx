@@ -1,12 +1,12 @@
 import { LanguagePicker, Search, WeatherCardContainer } from "@weather/entities";
 import { useSearch } from "@weather/features";
-import { useUserLocation, useForecast, useScrollPagination } from "@weather/shared";
+import { useUserLocation, useWeatherForecast, useScrollPagination } from "@weather/shared";
 
 export const Home = () => {
   useScrollPagination();
   useUserLocation();
   const searchLogic = useSearch();
-  const { weatherForecasts } = useForecast();
+  const { weatherForecasts } = useWeatherForecast();
 
   return (
     <>

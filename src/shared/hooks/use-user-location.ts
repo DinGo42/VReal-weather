@@ -2,11 +2,11 @@ import { useState } from "react";
 import { getInfoByAddress } from "../utils";
 import { v4 as uuidv4 } from "uuid";
 import { TemperatureMetrics } from "../types";
-import { useForecast } from "./use-forecast";
+import { useWeatherForecast } from "./use-weather-forecast";
 
 export const useUserLocation = () => {
   const [hasLocation, setLocation] = useState(false);
-  const { addForecastLocation } = useForecast();
+  const { addForecastLocation } = useWeatherForecast();
   if (!hasLocation) {
     setLocation(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {

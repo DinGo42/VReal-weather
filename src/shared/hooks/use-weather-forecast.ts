@@ -7,7 +7,7 @@ import {
   useAppSelector,
 } from "../store";
 
-export const useForecast = () => {
+export const useWeatherForecast = () => {
   const { weatherForecasts, currentPaginationPage } = useAppSelector((state) => state.weatherReducer);
   const dispatch = useAppDispatch();
 

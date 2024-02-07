@@ -6,7 +6,7 @@ import {
   TemperatureMetrics,
   getInfoByAddress,
   selectedForecastStorage,
-  useForecast,
+  useWeatherForecast,
 } from "@weather/shared";
 import { FC, memo, useCallback } from "react";
 import { ClearSuggestions, SetValue, Status } from "use-places-autocomplete";
@@ -27,7 +27,7 @@ export type SearchProps = {
 export const Search: FC<SearchProps> = memo(
   ({ isLoading, onChange, value, status, clearSuggestions, data, setLocation }) => {
     const { t } = useTranslation();
-    const { addForecastLocation } = useForecast();
+    const { addForecastLocation } = useWeatherForecast();
 
     const handleAdd = useCallback(async () => {
       if (!value.trim()) return;

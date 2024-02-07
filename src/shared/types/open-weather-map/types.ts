@@ -63,7 +63,7 @@ export type Forecast = {
 
 export type City = {
   country: CountryCode;
-  coords: Coords;
+  coord: Coords;
   id: number;
   name: string;
   population: number;
