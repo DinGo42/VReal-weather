@@ -6,6 +6,7 @@ const currentLanguage = languageStorage.get() || Languages.ENG;
 
 export const useSearch = (settings?: HookArgs) => {
   const [newData, setData] = useState<google.maps.places.AutocompletePrediction[]>([]);
+  const [selectedValue, setSelected] = useState("");
   const {
     value,
     setValue,
@@ -14,7 +15,6 @@ export const useSearch = (settings?: HookArgs) => {
     clearSuggestions,
   } = useReactPlaces({
     requestOptions: {
-      types: ["geocode"],
       language: currentLanguage,
     },
     cache: false,
@@ -50,6 +50,8 @@ export const useSearch = (settings?: HookArgs) => {
     data: newData,
     isLoading: loading,
     status,
+    selectedValue,
+    setSelected,
     onChange: handleChange,
     setLocation: setValue,
     clearSuggestions,

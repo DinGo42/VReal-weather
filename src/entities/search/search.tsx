@@ -22,28 +22,25 @@ export type SearchProps = {
   setLocation: SetValue;
   clearSuggestions: ClearSuggestions;
   data: google.maps.places.AutocompletePrediction[];
+  selectedValue: string;
+  setSelected: (value: string) => void;
 };
 
 export const Search: FC<SearchProps> = memo(
-  ({ isLoading, onChange, value, status, clearSuggestions, data, setLocation }) => {
+  ({ isLoading, onChange, value, status, clearSuggestions, data, setLocation, selectedValue, setSelected }) => {
     const { t } = useTranslation();
     const { addForecastLocation } = useWeatherForecast();
-
     const handleAdd = useCallback(async () => {
-      if (!value.trim()) return;
-      const {
-        city,
-        country: { shortName, longName },
-        coords,
-      } = await getInfoByAddress({ address: value });
-      const address = city ? `${city}, ${shortName}` : longName;
-      addForecastLocation({ address, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
+      if (!selectedValue.trim()) return;
+      const { coords } = await getInfoByAddress({ address: selectedValue });
+      addForecastLocation({ address: value, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
       const info = selectedForecastStorage.get() ?? [];
-      info.push({ address, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
+      info.push({ address: selectedValue, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
       selectedForecastStorage.set(info);
       onChange(" ");
+      setSelected("");
       clearSuggestions();
-    }, [addForecastLocation, clearSuggestions, onChange, value]);
+    }, [addForecastLocation, clearSuggestions, onChange, selectedValue, setSelected, value]);
 
     return (
       <div className="relative mx-auto flex w-full max-w-[640px] gap-10 px-10">
@@ -57,7 +54,12 @@ export const Search: FC<SearchProps> = memo(
             {isLoading && status === "OK" ? (
               <span> {t("loading")}</span>
             ) : (
-              <SearchingResults clearSuggestions={clearSuggestions} data={data} setLocation={setLocation} />
+              <SearchingResults
+                setSelected={setSelected}
+                clearSuggestions={clearSuggestions}
+                data={data}
+                setLocation={setLocation}
+              />
             )}
           </div>
         </Input>

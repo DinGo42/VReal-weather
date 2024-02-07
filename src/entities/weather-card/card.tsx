@@ -25,37 +25,38 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
   const [measurementScale, setMeasurementScale] = useState(selectedMetrics);
   const { createError } = useError();
   const { t, i18n } = useTranslation();
-
-  const { isError, isLoading, data, isFetching } = useGetForecast(coords, {
-    selectFromResult: (res) => {
-      if (!res.isSuccess || !res.data) return { ...res, data: undefined };
-      const { list, isTemperatureBelowZero } = res.data;
-
-      const rawForecastData = list.map(({ dt, main: { temp } }) => ({ date: dt, temperature: temp })) || [];
-
-      const forecastData = rawForecastData.map(({ temperature, date }) => ({
-        temperature: Math.floor(TemperatureFormulas[measurementScale](temperature, TemperatureMetrics.KELVIN)!),
-        date: getFormattedDate({ locale: i18n.language, date: new Date(date * 1000) }).formattedMonthYear,
-      }));
-      return {
-        ...res,
-        data: {
-          currentForecast: {
-            feelsLikeTemperature: list[0].main.feels_like || 0,
-            humidity: list[0].main.humidity || 0,
-            pressure: list[0].main.pressure || 0,
-            temperature: list[0].main.temp || 0,
-            windSpeed: list[0].wind.speed || 0,
+  const { isError, isLoading, data, isFetching } = useGetForecast(
+    { ...coords, address },
+    {
+      selectFromResult: (res) => {
+        if (!res.isSuccess || !res.data) return { ...res, data: undefined };
+        const { list, isTemperatureBelowZero, location } = res.data;
+        const rawForecastData = list.map(({ dt, main: { temp } }) => ({ date: dt, temperature: temp })) || [];
+        const forecastData = rawForecastData.map(({ temperature, date }) => ({
+          temperature: Math.floor(TemperatureFormulas[measurementScale](temperature, TemperatureMetrics.KELVIN)!),
+          date: getFormattedDate({ locale: i18n.language, date: new Date(date * 1000) }).formattedMonthYear,
+        }));
+        return {
+          ...res,
+          data: {
+            currentForecast: {
+              feelsLikeTemperature: list[0].main.feels_like || 0,
+              humidity: list[0].main.humidity || 0,
+              pressure: list[0].main.pressure || 0,
+              temperature: list[0].main.temp || 0,
+              windSpeed: list[0].wind.speed || 0,
+            },
+            iconCode: list[0].weather[0].icon,
+            weatherState:
+              list[0].weather[0].description[0].toLocaleUpperCase() + list[0].weather[0].description.slice(1),
+            forecastData,
+            location,
+            isTemperatureBelowZero,
           },
-          iconCode: list[0].weather[0].icon,
-          weatherState: list[0].weather[0].description[0].toLocaleUpperCase() + list[0].weather[0].description.slice(1),
-          forecastData,
-          location: address,
-          isTemperatureBelowZero,
-        },
-      };
+        };
+      },
     },
-  });
+  );
   const { removeForecastLocation } = useWeatherForecast();
   const { fullFormatted } = getFormattedDate({ locale: i18n.language });
 
@@ -71,6 +72,13 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
     [id],
   );
 
+  const handleDelete = useCallback(() => {
+    removeForecastLocation(id);
+    const info = selectedForecastStorage.get() ?? [];
+    const updatedInfo = info.filter(({ id: forecastId }) => forecastId !== id);
+    selectedForecastStorage.set(updatedInfo);
+  }, [id, removeForecastLocation]);
+
   if (!data) return;
 
   const {
@@ -83,7 +91,6 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
   } = data;
 
   const currentTemperature = TemperatureFormulas[measurementScale](temperature, TemperatureMetrics.KELVIN)?.toFixed(1);
-
   const feelsLikeCurrentTemperature = TemperatureFormulas[measurementScale](
     feelsLikeTemperature,
     TemperatureMetrics.KELVIN,
@@ -103,7 +110,7 @@ export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedM
         isTemperatureBelowZero ? "bg-black-600" : "bg-white-850",
       )}
     >
-      <Button className="-mr-2 size-2 self-end" onClick={() => removeForecastLocation(id)}>
+      <Button className="-mr-2 size-2 self-end" onClick={handleDelete}>
         <CloseIcon />
       </Button>
       <div className="-mt-4 flex justify-between pr-3">

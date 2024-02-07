@@ -7,14 +7,15 @@ export type ResultItemProps = {
   clearSuggestions: ClearSuggestions;
   data: google.maps.places.AutocompletePrediction[];
   setLocation: SetValue;
+  setSelected: (value: string) => void;
 };
-
-export const SearchingResults: FC<ResultItemProps> = memo(({ clearSuggestions, data, setLocation }) =>
+export const SearchingResults: FC<ResultItemProps> = memo(({ clearSuggestions, data, setLocation, setSelected }) =>
   data.map(({ description }) => (
     <Button
       className="px-4 py-2 text-start hover:bg-black-700"
       key={uuidv4()}
       onClick={() => {
+        setSelected(description);
         setLocation(description, false);
         clearSuggestions();
       }}
