@@ -12,7 +12,7 @@ const { maxElementsPerPage, maxPaginationPages } = getPaginationStates({
 
 export type SelectedLocation = {
   id: string;
-  address: string;
+  placeId: string;
   coords: { lat: number; lng: number };
   selectedMetrics: TemperatureMetrics;
 };

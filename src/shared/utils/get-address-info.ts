@@ -3,12 +3,12 @@ import { languageStorage } from ".";
 import { Languages } from "..";
 
 type LocationWithAddress = {
-  address: string;
+  placeId: string;
 };
 
 type LocationWithLatLong = {
   location: { lat: number; lng: number };
-  address?: never;
+  placeId?: never;
 };
 
 type InfoByAddressProps = (LocationWithAddress | LocationWithLatLong) &
@@ -30,5 +30,6 @@ export const getInfoByAddress = async (props: InfoByAddressProps) => {
       return component.types.includes(item);
     }),
   )[0]!;
-  return { city: city || null, coords: { lat, lng }, country: { longName, shortName } };
+
+  return { city: city || null, coords: { lat, lng }, country: { longName, shortName }, placeId: results[0].place_id };
 };

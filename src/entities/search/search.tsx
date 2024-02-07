@@ -32,15 +32,20 @@ export const Search: FC<SearchProps> = memo(
     const { addForecastLocation } = useWeatherForecast();
     const handleAdd = useCallback(async () => {
       if (!selectedValue.trim()) return;
-      const { coords } = await getInfoByAddress({ address: selectedValue });
-      addForecastLocation({ address: value, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
+      const { coords } = await getInfoByAddress({ placeId: selectedValue });
+      addForecastLocation({
+        placeId: selectedValue,
+        coords,
+        id: uuidv4(),
+        selectedMetrics: TemperatureMetrics.CELSIUS,
+      });
       const info = selectedForecastStorage.get() ?? [];
-      info.push({ address: selectedValue, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
+      info.push({ placeId: selectedValue, coords, id: uuidv4(), selectedMetrics: TemperatureMetrics.CELSIUS });
       selectedForecastStorage.set(info);
       onChange(" ");
       setSelected("");
       clearSuggestions();
-    }, [addForecastLocation, clearSuggestions, onChange, selectedValue, setSelected, value]);
+    }, [addForecastLocation, clearSuggestions, onChange, selectedValue, setSelected]);
 
     return (
       <div className="relative mx-auto flex w-full max-w-[640px] gap-10 px-10">

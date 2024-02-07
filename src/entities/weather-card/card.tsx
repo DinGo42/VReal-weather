@@ -21,12 +21,12 @@ export type CardProps = SelectedLocation;
 
 const iconSrc = "http://openweathermap.org/img/w" as const;
 
-export const WeatherCard: FC<CardProps> = memo(({ address, coords, id, selectedMetrics }) => {
+export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedMetrics }) => {
   const [measurementScale, setMeasurementScale] = useState(selectedMetrics);
   const { createError } = useError();
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data, isFetching } = useGetForecast(
-    { ...coords, address },
+    { ...coords, placeId },
     {
       selectFromResult: (res) => {
         if (!res.isSuccess || !res.data) return { ...res, data: undefined };

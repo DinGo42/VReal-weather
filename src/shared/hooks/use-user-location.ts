@@ -13,13 +13,10 @@ export const useUserLocation = () => {
       const addressInfo = await getInfoByAddress({
         location: { lat: coords.latitude, lng: coords.longitude },
       });
-      const {
-        city,
-        country: { shortName, longName },
-      } = addressInfo!;
+      const { placeId } = addressInfo!;
 
       const locationData = {
-        address: city ? `${city}, ${shortName}` : longName,
+        placeId,
         coords: { lat: coords.latitude, lng: coords.longitude },
         id: uuidv4(),
         selectedMetrics: TemperatureMetrics.CELSIUS,

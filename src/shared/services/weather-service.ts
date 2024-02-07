@@ -8,7 +8,7 @@ const currentLanguage = languageStorage.get() || Languages.ENG;
 type WeatherApiParams = {
   lat: number;
   lng: number;
-  address: string;
+  placeId: string;
 };
 
 type WeatherApiResponse = {
@@ -18,18 +18,20 @@ type WeatherApiResponse = {
 const validateWeatherResponse = async (
   data: WeatherResponse | WeatherError,
   _: unknown,
-  { address }: WeatherApiParams,
+  { placeId }: WeatherApiParams,
 ) => {
   if (data.cod !== StatusCodes.SUCCESS || !data || !data.list || data.list.length === 0) {
     throw data;
   }
   const {
     city,
-    country: { shortName },
-  } = await getInfoByAddress({ address });
+    country: { shortName, longName },
+  } = await getInfoByAddress({ placeId });
+
+  console.log(`${city}, ${shortName}`, "::", longName);
   return {
     ...data,
-    location: city ? `${city}, ${shortName}` : address,
+    location: city ? `${city}, ${shortName}` : longName,
     list: data.list.filter((_, index) => (index + 1) % 8 === 0),
     isTemperatureBelowZero: data.list[0].main.temp < 273.15,
   };

@@ -27,7 +27,7 @@ export const useSearch = (settings?: HookArgs) => {
     if (!ready) return;
     Promise.all(
       data.map(async (place) => {
-        const addressInfo = await getInfoByAddress({ address: place.description });
+        const addressInfo = await getInfoByAddress({ placeId: place.place_id });
         const {
           city,
           country: { shortName, longName },
