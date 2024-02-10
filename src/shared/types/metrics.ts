@@ -1,5 +1,5 @@
 export enum TemperatureMetrics {
-  CELSIUS = "C",
-  FAHRENHEIT = "F",
-  KELVIN = "K",
+  CELSIUS = "℃",
+  FAHRENHEIT = "℉",
+  KELVIN = "K",
 }

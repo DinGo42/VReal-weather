@@ -17,6 +17,12 @@ import { useTranslation } from "react-i18next";
 import { twJoin } from "tailwind-merge";
 import { WeatherCardSkeleton } from "./card-skeleton";
 
+const metrics: Record<TemperatureMetrics, string> = {
+  [TemperatureMetrics.CELSIUS]: "°C",
+  [TemperatureMetrics.FAHRENHEIT]: "°F",
+  [TemperatureMetrics.KELVIN]: "°K",
+};
+
 export type CardProps = SelectedLocation;
 
 const iconSrc = "http://openweathermap.org/img/w" as const;
@@ -140,21 +146,21 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
 
       <div className="flex items-end justify-between">
         <div className="flex flex-col">
-          <div className="flex">
+          <div className="flex gap-1">
             <span className="text-h1">{!isTemperatureBelowZero ? "+" + currentTemperature : currentTemperature}</span>
             <div className="flex h-full items-center gap-2 text-h2 text-black-900">
               <Button
                 onClick={() => handleClick(TemperatureMetrics.CELSIUS)}
                 className={(measurementScale === TemperatureMetrics.CELSIUS && "text-black-1000") || ""}
               >
-                °{TemperatureMetrics.CELSIUS}
+                {metrics[TemperatureMetrics.CELSIUS]}
               </Button>
               <span className="h-5 w-[1.5px] bg-[#707070] text-h2 opacity-65"></span>
               <Button
                 onClick={() => handleClick(TemperatureMetrics.FAHRENHEIT)}
                 className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-black-1000") || ""}
               >
-                °{TemperatureMetrics.FAHRENHEIT}
+                {metrics[TemperatureMetrics.FAHRENHEIT]}
               </Button>
             </div>
           </div>
@@ -164,7 +170,7 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
               {Number(feelsLikeCurrentTemperature) > 0
                 ? "+" + feelsLikeCurrentTemperature
                 : feelsLikeCurrentTemperature}{" "}
-              °{measurementScale}
+              {metrics[measurementScale]}
             </span>
           </div>
         </div>

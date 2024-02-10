@@ -25,9 +25,6 @@ i18next.use(initReactI18next).init({
   fallbackLng: languageStorage.get() || Languages.ENG,
   resources,
   fallbackNS: "main",
-  interpolation: {
-    escapeValue: false,
-  },
 });
 
 export default i18next;
