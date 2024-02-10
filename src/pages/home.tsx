@@ -15,7 +15,7 @@ export const Home = () => {
         <Search {...searchLogic} />
       </div>
 
-      <main role="main" className="grid h-fit w-full grid-rows-1 items-start gap-8 p-10 lg:grid-cols-3 xl:grid-cols-5">
+      <main role="main" className="flex h-fit w-full flex-wrap gap-x-[30px] gap-y-8 px-6 py-11">
         <WeatherCardContainer data={weatherForecasts} />
       </main>
     </>

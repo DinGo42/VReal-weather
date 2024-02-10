@@ -106,7 +106,7 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
   ) : (
     <div
       className={twJoin(
-        "flex h-full flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main",
+        "flex h-full flex-grow flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main md:max-w-[350px]",
         isTemperatureBelowZero ? "bg-black-600" : "bg-white-850",
       )}
     >
@@ -147,21 +147,25 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
                 onClick={() => handleClick(TemperatureMetrics.CELSIUS)}
                 className={(measurementScale === TemperatureMetrics.CELSIUS && "text-black-1000") || ""}
               >
-                {TemperatureMetrics.CELSIUS}
+                °{TemperatureMetrics.CELSIUS}
               </Button>
               <span className="h-5 w-[1.5px] bg-[#707070] text-h2 opacity-65"></span>
               <Button
                 onClick={() => handleClick(TemperatureMetrics.FAHRENHEIT)}
                 className={(measurementScale === TemperatureMetrics.FAHRENHEIT && "text-black-1000") || ""}
               >
-                {TemperatureMetrics.FAHRENHEIT}
+                °{TemperatureMetrics.FAHRENHEIT}
               </Button>
             </div>
           </div>
           <div className="text-h6 text-black-800">
             {t("weatherCard.feelsLike")}:{" "}
-            {Number(feelsLikeCurrentTemperature) > 0 ? "+" + feelsLikeCurrentTemperature : feelsLikeCurrentTemperature}
-            <span className="text-h6-semi-bold">{measurementScale}</span>
+            <span className="text-h6-semi-bold">
+              {Number(feelsLikeCurrentTemperature) > 0
+                ? "+" + feelsLikeCurrentTemperature
+                : feelsLikeCurrentTemperature}{" "}
+              °{measurementScale}
+            </span>
           </div>
         </div>
         <div className="flex flex-col items-end">
@@ -170,8 +174,7 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
             <span
               className={twJoin("text-h7-semi-bold", isTemperatureBelowZero ? "text-blue-1000" : "text-orange-1000")}
             >
-              {windSpeed}
-              {t("weatherCard.wind.unit")}
+              {windSpeed} {t("weatherCard.wind.unit")}
             </span>
           </div>
           <div className="w-fit text-h7">
