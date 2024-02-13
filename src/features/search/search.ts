@@ -1,4 +1,4 @@
-import { languageStorage, Languages, getInfoByAddress } from "@weather/shared";
+import { languageStorage, Languages, getInfoByAddress, useWeatherForecast } from "@weather/shared";
 import { useState, useCallback, useEffect } from "react";
 import useReactPlaces, { HookArgs } from "use-places-autocomplete";
 
@@ -6,6 +6,7 @@ const currentLanguage = languageStorage.get() || Languages.ENG;
 
 export const useSearch = (settings?: HookArgs) => {
   const [newData, setData] = useState<google.maps.places.AutocompletePrediction[]>([]);
+  const { weatherForecasts } = useWeatherForecast();
   const [selectedValue, setSelected] = useState("");
   const {
     value,
@@ -47,8 +48,12 @@ export const useSearch = (settings?: HookArgs) => {
     [setValue],
   );
 
+  const searchResultData = newData.filter(
+    ({ place_id: placeId }) => !weatherForecasts.some(({ placeId: storagePlaceId }) => storagePlaceId === placeId),
+  );
+
   return {
-    data: newData,
+    data: searchResultData,
     isLoading: loading,
     status,
     selectedValue,
