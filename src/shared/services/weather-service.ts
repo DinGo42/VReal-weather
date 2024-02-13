@@ -41,7 +41,7 @@ export const weatherApi = createApi({
   endpoints: (builder) => ({
     getForecast: builder.query<WeatherApiResponse, WeatherApiParams>({
       query: ({ lat, lng }) =>
-        `data/2.5/forecast?lat=${lat}&lon=${lng}&lang=${currentLanguage}&appid=${"1a45ff9e85cd13ad1ad576307fe7a916"}`,
+        `data/2.5/forecast?lat=${lat}&lon=${lng}&lang=${currentLanguage}&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
       transformResponse: validateWeatherResponse,
     }),
   }),
