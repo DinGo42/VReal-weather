@@ -112,7 +112,7 @@ export const WeatherCard: FC<CardProps> = memo(({ placeId, coords, id, selectedM
   ) : (
     <div
       className={twJoin(
-        "flex h-full flex-grow flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main md:max-w-[350px]",
+        "flex flex-grow flex-col justify-between gap-4 rounded-md py-2 pl-4 pr-4 shadow-main md:max-w-[350px]",
         isTemperatureBelowZero ? "bg-black-600" : "bg-white-850",
       )}
     >
