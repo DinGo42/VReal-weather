@@ -1,6 +1,6 @@
 import { PlanetIcon, ArrowIcon } from "@weather/icons";
-import { languageStorage, Languages, Button } from "@weather/shared";
-import { FC, memo, useCallback, useState } from "react";
+import { languageStorage, Languages, Button, useEventOutsideElement } from "@weather/shared";
+import { FC, memo, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { twJoin } from "tailwind-merge";
 
@@ -9,6 +9,7 @@ type LanguagePickerProps = {
 };
 
 export const LanguagePicker: FC<LanguagePickerProps> = memo(({ className }) => {
+  const picker = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState(false);
   const [language, setLanguage] = useState(languageStorage.get() || Languages.ENG);
   const { i18n } = useTranslation();
@@ -22,8 +23,18 @@ export const LanguagePicker: FC<LanguagePickerProps> = memo(({ className }) => {
     },
     [i18n],
   );
+
+  useEventOutsideElement(picker, "click", () => {
+    if (!isOpen) return;
+    setOpen(false);
+  });
+
   return (
-    <div className={twJoin("relative ml-40 flex w-fit flex-col items-center", className)}>
+    <div
+      ref={picker}
+      id="languagePicker"
+      className={twJoin("relative ml-40 flex w-fit flex-col items-center", className)}
+    >
       <Button onClick={() => setOpen((prev) => !prev)}>
         <div className="flex w-fit items-center gap-1">
           <PlanetIcon className="size-3" />

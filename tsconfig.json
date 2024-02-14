@@ -22,9 +22,9 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@weather/*": ["./src/*"],
-      "@weather/icons": ["./public/icons"],
-    },
+      "@weather/icons": ["./public/icons"]
+    }
   },
   "include": ["src", "vite.config.ts", "public/icons/index.ts", "postcss.config.cjs", "**/*.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
